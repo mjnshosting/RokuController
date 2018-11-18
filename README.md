@@ -1,4 +1,6 @@
 # Roku CLI/Web Controller
+## Instructions
+copy/download and make executable (chmod +x roku_controller.sh)
 
 ## Help Menu  
 roku_controller.sh -ald -ofsk  
