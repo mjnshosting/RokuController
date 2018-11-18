@@ -14,7 +14,8 @@ Usage:
   -f: Turn TV/Device Off. -f  
   -s: Run Setup on TV/Device. -s  
   -k: Press Button on TV/Device. -k H  
-          <pre><code>H='Home'</code></pre>  
+          <pre><code>
+          H='Home'  
           R='Rev'  
           F='Fwd'  
           P='Play'  
@@ -29,7 +30,7 @@ Usage:
           BS='Backspace'  
           SH='Search'  
           E='Enter'  
-  
+          </code></pre>  
 Ex:  
 roku_controller -a -k u  
  - Will press the up button on all devices listed in the declared array  
