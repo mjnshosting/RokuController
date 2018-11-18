@@ -14,6 +14,12 @@ I='Info'
 BS='Backspace'
 SH='Search'
 E='Enter'
+IT='InputTuner'
+IH1='InputHDMI1'
+IH2='InputHDMI2'
+IH3='InputHDMI3'
+IH4='InputHDMI4'
+IA='InputAV1'
 Pn='PowerOn'
 Pf='PowerOff'
 
@@ -47,6 +53,12 @@ function do_help {
         echo "          BS='Backspace'"
         echo "          SH='Search'"
         echo "          E='Enter'"
+        echo "          IT='InputTuner'"
+        echo "          IH1='InputHDMI1'"
+        echo "          IH2='InputHDMI2'"
+        echo "          IH3='InputHDMI3'"
+        echo "          IH4='InputHDMI4'"
+        echo "          IA='InputAV1'"
         echo ""
         echo "Ex:"
         echo -e "\033[0;33mroku_controller -a -k u \e[0m"
@@ -259,57 +271,75 @@ function do_keypress {
 	#Bash 4.0 way of converting strings to uppercase letters
 	case ${KP^^} in
 		H )
-			KP='Home'
+			KP=$H
 			;;
 		R )
-			KP='Rev'
+			KP=$R
 			;;
 		F )
-			KP='Fwd'
+			KP=$F
 			;;
 		P )
-			KP='Play'
+			KP=$P
 			;;
 		S )
-			KP='Select'
+			KP=$S
 			;;
 		LT )
-			KPT='Left'
+			KPT=$LT
 			;;
 		RT )
-			KPT='Right'
+			KPT=$RT
 			;;
 		D )
-			KP='Down'
+			KP=$D
 			;;
 		U )
-			KP='Up'
+			KP=$U
 			;;
 		B )
-			KP='Back'
+			KP=$B
 			;;
 		IR )
-			KP='InstantReplay'
+			KP=$IR
 			;;
 		I )
-			KP='Info'
+			KP=$I
 			;;
 		BS )
-			KP='Backspace'
+			KP=$BS
 			;;
 		SH )
-			KP='Search'
+			KP=$SH
 			;;
 		E )
-			KP='Enter'
+			KP=$E
+			;;
+		IT )
+			KP=$IT
+			;;
+		IH1 )
+			KP=$IH1
+			;;
+		IH2 )
+			KP=$IH2
+			;;
+		IH3 )
+			KP=$IH3
+			;;
+		IH4 )
+			KP=$IH4
+			;;
+		IA )
+			KP=$IA
 			;;
 		"" )
-			echo -e "\033[0;31mInvalid Secondary Option: -k requires an argument\e[0m" 1>&2
+			echo -e "\033[0;31mSecondary Option: -k requires an argument\e[0m" 1>&2
 			echo "roku_controller.sh -h: For Help Menu"
 			exit 1
 			;;
 		* )
-			echo -e "\033[0;31mInvalid Secondary Option: -k $KP \e[0m" 1>&2
+			echo -e "\033[0;31mInvalid Secondary Option: $KP \e[0m" 1>&2
 			echo "roku_controller.sh -h: For Help Menu"
 			exit 1
 			;;
@@ -333,12 +363,12 @@ case $secondary in
 		do_keypress $device $KP
 		;;
 	"" )
-		echo -e "\033[0;31mInvalid Secondary Option: -$1 requires an argument\e[0m" 1>&2
+		echo -e "\033[0;31mRequires a Secondary Option\e[0m" 1>&2
 		echo "roku_controller.sh -h: For Help Menu"
 		exit 1
 		;;
 	* )
-		echo -e "\033[0;31mInvalid Secondary Option: -k $KP \e[0m" 1>&2
+		echo -e "\033[0;31mInvalid Secondary Option: $secondary \e[0m" 1>&2
 		echo "roku_controller.sh -h: For Help Menu"
 		exit 1
 		;;
@@ -347,7 +377,8 @@ esac
 
 
 
-#Takes arguments for a single device, an array of devices, or a list of devices and generates proper command. 
+#Takes arguments for a single device, an array of devices, 
+#or a list of devices and generates proper command. 
 primary=$1; shift
 case $primary in
 	-h )
@@ -355,7 +386,8 @@ case $primary in
 		exit 0
 		;;
 	-a )
-		declare -a ipadd=("192.168.2.10" "192.168.2.11")
+		#List of array items
+		declare -a ipadd=("192.168.2.6" "192.168.2.7" "192.168.2.10")
 		for device in "${ipadd[@]}"
 		do (
 			secondary=$1
@@ -364,7 +396,17 @@ case $primary in
 		)
 		done
 		;;
+	-l )
+		while read device
+       		do (
+			secondary=$2
+			KP=$3
+			do_options
+       		)
+		done < $1
+		;;
 	-d )
+		#I will probably remove input validation because some devices may have a FQDN or local DNS name
 		if [[ "$1" =~ (([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.([01]{,1}[0-9]{1,2}|2[0-4][0-9]|25[0-5]))$ ]]
 		then
 			device=$1; shift
