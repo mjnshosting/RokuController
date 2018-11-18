@@ -30,6 +30,11 @@ Usage:
           BS='Backspace'  
           SH='Search'  
           E='Enter'  
+          IT='InputTuner'
+          IH1='InputHDMI1'  
+          IH2='InputHDMI2'  
+          IH3='InputHDMI3'  
+          IH4='InputHDMI4'  
           </code></pre>  
 Ex:  
 roku_controller -a -k u  
