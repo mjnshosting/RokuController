@@ -1,4 +1,18 @@
-# Roku CLI/Web Controller
+# Roku CLI Controller
+## Purpose
+A bash based setup script is how this solution started so I made 
+it into something a bit more robust....ehhh really I just did a 
+whole bunch of case statements. 
+
+Anyway its easier for cronjobs and allows for the control or one 
+or more devices whether in an array, list, or just one device. 
+I hope this helps and I remains simple. The Web counterpart just 
+makes a web based remote to handle one or all TVs since my salon 
+will have many Roku TVs (7 when all said and done, 3 now) from 
+the shops Galaxy Note 4 (used and really cheap). Devices will be
+in a SQLite DB with a PHP front end. I will try and keep that 
+simple as well. 
+
 ## Instructions
 copy/download and make executable (chmod +x roku_controller.sh)
 
